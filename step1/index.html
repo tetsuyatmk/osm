@@ -7,27 +7,10 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>OpenStreetMap sample</title>
-        <!-- leaflet の読み込み -->
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-        <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+        <title>リスト</title>
     </head>
     <body>
-        <!-- mapオブジェクトの生成 -->
-        <div id="map" style="width: 1500px; height: 400px"></div>
-        <script>
-
-            <!-- leafletのmapオブジェクトの生成 -->
-            var map = L.map('map').setView([36.3219088　, 139.0032936], 14);
-
-            <!-- tileLayerを生成してmapに追加 -->
-            L.tileLayer(
-                'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                {
-                    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
-                    maxZoom: 18
-                }
-            ).addTo(map);
-        </script>
+        <a href="simple.html">シンプルなOSMサンプル</a><br>
+        <a href="osmd3.html">D3とのリンクサンプル</a><br>
     </body>
 </html>
