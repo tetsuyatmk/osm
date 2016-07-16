@@ -24,7 +24,7 @@
 
         var updatePosition = function(d)
         {
-          d.pos = map.latLngToLayerPoint(new L.LatLng(d.x, d.y));
+          d.pos = map.latLngToLayerPoint(new L.LatLng(d.y, d.x));
           d3.select(this).attr( {cx: d.pos.x, cy: d.pos.y } );
         }
 
