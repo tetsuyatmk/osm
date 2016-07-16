@@ -24,15 +24,18 @@
 
         var updatePosition = function(d)
         {
-          d.pos = map.latLngToLayerPoint(new L.LatLng(d.y, d.x));
+          d.pos = map.latLngToLayerPoint(new L.LatLng(d.x, d.y));
           d3.select(this).attr( {cx: d.pos.x, cy: d.pos.y } );
         }
 
 //        d3.json('/osm/step1/syogaku.json', function(err,data)
         d3.json('https://tetsuyatmk.github.io/osm/step1/syogaku.csv', function(err,data) // ローカル用
         {
-          var points = data.nodes;
-          plotLayer.selectAll('circle').data(points).enter().append('circle')
+//          var points = data.nodes;
+          plotLayer.selectAll('circle')
+                   .data(data)
+                   .enter()
+                   .append('circle')
             .attr({r:10, fill:'steelblue', stroke: 'white', 'stroke-width': 3}).each(updatePosition);
           map.on('move', function()
           {
