@@ -3,7 +3,6 @@
     <head>
         <meta charset='utf-8'>
         <!-- D3.jsの読み込み -->
-<!--        <script src='//d3js.org/d3.v3.min.js'></script> -->
         <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <!-- leafletの読み込み -->
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css' />
@@ -18,20 +17,24 @@
         var tile = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
           attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
+
         <!-- SVGレイヤを追加 -->
-        var svgLayer = d3.select(map.getPanes().overlayPane).append('svg').attr('class', 'leaflet-zoom-hide');
+        var svgLayer = d3.select(map.getPanes().overlayPane)
+                        .append('svg')
+                        .attr('class', 'leaflet-zoom-hide');
+
+        <!-- 小学校のレイヤ -->
         var plotLayer = svgLayer.append('g');
 
         var updatePosition = function(d)
         {
-          d.pos = map.latLngToLayerPoint(new L.LatLng(d.x, d.y));
+          d.pos = map.latLngToLayerPoint(new L.LatLng(d.y, d.x));
           d3.select(this).attr( {cx: d.pos.x, cy: d.pos.y } );
         }
 
-//        d3.json('/osm/step1/syogaku.json', function(err,data)
-        d3.json('https://tetsuyatmk.github.io/osm/step1/syogaku.csv', function(err,data) // ローカル用
+        <!-- 小学校のCSVを読み込む -->
+        d3.csv('https://tetsuyatmk.github.io/osm/step1/syogaku.csv', function(err,data) // ローカル用
         {
-//          var points = data.nodes;
           plotLayer.selectAll('circle')
                    .data(data)
                    .enter()
@@ -60,5 +63,9 @@
 
         map.on("move", reset);
         </script>
+
+    <!-- CC -->
+    <span>このページは<a href="http://www.pref.gunma.jp/07/b2700057.html">群馬県オープンデータ</a>を使用しています。
+</span>
     </body>
 </html>
