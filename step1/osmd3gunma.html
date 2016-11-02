@@ -24,7 +24,10 @@
                         .attr('class', 'leaflet-zoom-hide');
 
         <!-- 小学校のレイヤ -->
-        var plotLayer = svgLayer.append('g');
+        var plotLayerSyogaku = svgLayer.append('g');
+
+        <!-- 中学校のレイヤ -->
+        var plotLayerTyugaku = svgLayer.append('g');
 
         var updatePosition = function(d)
         {
@@ -33,16 +36,31 @@
         }
 
         <!-- 小学校のCSVを読み込む -->
-        d3.csv('https://tetsuyatmk.github.io/osm/step1/syogaku.csv', function(err,data) // ローカル用
+        d3.csv('https://tetsuyatmk.github.io/osm/step1/syogaku.csv', function(err,data)
         {
-          plotLayer.selectAll('circle')
+          plotLayerSyogaku.selectAll('circle')
                    .data(data)
                    .enter()
                    .append('circle')
             .attr({r:10, fill:'steelblue', stroke: 'white', 'stroke-width': 3}).each(updatePosition);
           map.on('move', function()
           {
-            plotLayer.selectAll('circle').each(updatePosition);
+            plotLayerSyogaku.selectAll('circle').each(updatePosition);
+          });
+          reset();
+        });
+
+        <!-- 中学校のCSVを読み込む -->
+        d3.csv('https://tetsuyatmk.github.io/osm/step1/tyugaku.csv', function(err,data)
+        {
+          plotLayerTyugaku.selectAll('circle')
+                   .data(data)
+                   .enter()
+                   .append('circle')
+            .attr({r:10, fill:'orange', stroke: 'white', 'stroke-width': 3}).each(updatePosition);
+          map.on('move', function()
+          {
+            plotLayerTyugaku.selectAll('circle').each(updatePosition);
           });
           reset();
         });
@@ -58,7 +76,8 @@
             .style("left", topLeft.x + "px")
             .style("top", topLeft.y + "px");
 
-          plotLayer.attr('transform', 'translate('+ -topLeft.x + ',' + -topLeft.y + ')');
+          plotLayerSyogaku.attr('transform', 'translate('+ -topLeft.x + ',' + -topLeft.y + ')');
+          plotLayerTyugaku.attr('transform', 'translate('+ -topLeft.x + ',' + -topLeft.y + ')');
         }
 
         map.on("move", reset);
