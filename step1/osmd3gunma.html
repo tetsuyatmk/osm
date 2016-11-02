@@ -10,10 +10,10 @@
         <title>OSMとD3のサンプル</title>
     </head>
     <body>
-        <div style='width:960px;height:960px'></div>
+        <div style='width:1200px;height:960px'></div>
         <script>
         <!-- タイルマップの生成 -->
-        var map = new L.Map(d3.select('div').node()).setView([36.410707, 139.328973], 14);
+        var map = new L.Map(d3.select('div').node()).setView([36.410707, 139.128973], 11);
         var tile = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
           attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
@@ -42,7 +42,7 @@
                    .data(data)
                    .enter()
                    .append('circle')
-            .attr({r:10, fill:'steelblue', stroke: 'white', 'stroke-width': 3}).each(updatePosition);
+                   .attr({r:10, fill:'steelblue', stroke: 'white', 'stroke-width': 3}).each(updatePosition);
           map.on('move', function()
           {
             plotLayerSyogaku.selectAll('circle').each(updatePosition);
@@ -57,7 +57,7 @@
                    .data(data)
                    .enter()
                    .append('circle')
-            .attr({r:10, fill:'orange', stroke: 'white', 'stroke-width': 3}).each(updatePosition);
+                   .attr({r:10, fill:'orange', stroke: 'white', 'stroke-width': 3}).each(updatePosition);
           map.on('move', function()
           {
             plotLayerTyugaku.selectAll('circle').each(updatePosition);
