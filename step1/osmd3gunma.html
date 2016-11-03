@@ -29,6 +29,9 @@
         <!-- 中学校のレイヤ -->
         var plotLayerTyugaku = svgLayer.append('g');
 
+        <!-- 事故のレイヤ -->
+        var plotLayerJiko = svgLayer.append('g');
+
         var updatePosition = function(d)
         {
           d.pos = map.latLngToLayerPoint(new L.LatLng(d.y, d.x));
@@ -65,6 +68,21 @@
           reset();
         });
 
+        <!-- 事故のCSVを読み込む -->
+        d3.csv('https://tetsuyatmk.github.io/osm/step1/jiko.csv', function(err,data)
+        {
+          plotLayerJiko.selectAll('circle')
+                   .data(data)
+                   .enter()
+                   .append('circle')
+                   .attr({r:10, fill:'red', stroke: 'white', 'stroke-width': 3}).each(updatePosition);
+          map.on('move', function()
+          {
+            plotLayerJiko.selectAll('circle').each(updatePosition);
+          });
+          reset();
+        });
+
         var reset = function()
         {
           var bounds = map.getBounds();
@@ -78,6 +96,7 @@
 
           plotLayerSyogaku.attr('transform', 'translate('+ -topLeft.x + ',' + -topLeft.y + ')');
           plotLayerTyugaku.attr('transform', 'translate('+ -topLeft.x + ',' + -topLeft.y + ')');
+          plotLayerJiko.attr('transform', 'translate('+ -topLeft.x + ',' + -topLeft.y + ')');
         }
 
         map.on("move", reset);
